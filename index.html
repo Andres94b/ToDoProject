@@ -3,37 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>eCommerce Website</title>
+    <title>To-Do Website</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="/manifest.json">
 </head>
 <body>
     <div class="container">
+
+
         <!-- Product Grid Section -->
-        <div class="products-section">
-            <h1>Products</h1>
-            <div class="products-grid">
-                <div class="product" data-id="1" data-name="Product 1" data-price="20">
-                    <h2>Product 1</h2>
-                    <p>Price: $20</p>
+
+        <!-- Add buttons to add new task on the top righ corner -->
+        <!-- Add taks should have colours for importance of tasks-->
+
+        <!-- Add edit or delete buttons on each task -->
+
+
+        <div class="task-section">
+            <!--products-section-->
+            <h1>task</h1>
+            <div class="task-grid">
+                <div class="task" data-id="1" data-name="task 1" data-price="20">
+                    <h2>task 1</h2>
+                    <p>Notes....</p>
                 </div>
-                <div class="product" data-id="2" data-name="Product 2" data-price="35">
-                    <h2>Product 2</h2>
-                    <p>Price: $35</p>
+                <div class="task" data-id="2" data-name="task 2" data-price="35">
+                    <h2>task 2</h2>
+                    <p>Notes....</p>
                 </div>
-                <div class="product" data-id="3" data-name="Product 3" data-price="50">
-                    <h2>Product 3</h2>
-                    <p>Price: $50</p>
+                <div class="task" data-id="3" data-name="task 3" data-price="50">
+                    <h2>task 3</h2>
+                    <p>More notes...</p>
                 </div>
-                <!-- Add more products as needed -->
+                <!-- Add more task as needed -->
             </div>
         </div>
 
-        <!-- Cart Sidebar Section -->
-        <div class="cart-section">
-            <h2>Your Cart</h2>
-            <div class="cart-grid"></div>
-            <div class="cart-summary">
+
+
+        <!-- History Sidebar Section -->
+        <div class="history-section">
+            <h2>Your History</h2>
+            <div class="history-grid"></div>
+            <div class="history-summary">
                 <p>Total: $<span id="total-price">0</span></p>
                 <button id="checkout-button">Checkout</button>
             </div>
