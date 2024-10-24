@@ -2,6 +2,9 @@ $(document).ready(function () {
     let history = [];
     let totalPrice = 0;
 
+    // Add tasks
+
+
     // Add to Cart functionality for the entire product box
     $('.task').click(function () {
         const task = $(this);
