@@ -41,9 +41,6 @@
             </ul>
             
             <div class="task-grid">
-            <?php
-            include '../list_task.php';
-            ?>
             
                 <div class="task" data-id="1" data-name="task 1" data-importance="urgent">
                     <h2>task 1</h2>
@@ -69,11 +66,18 @@
         <!-- History Sidebar Section -->
         <div class="history-section">
             <h2>Your History</h2>
-            <div class="history-grid"></div>
+            <div class="history-grid">
+            <?php
+            include '../list_task.php';
+            ?>
+            </div>
             <div class="history-summary">
                 <p>Total: $<span id="total-price">0</span></p>
                 <button id="checkout-button">Checkout</button>
             </div>
+            <?php
+            include '../completed_tasks.php';
+            ?>
         </div>
     </div>
 
