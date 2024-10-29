@@ -6,6 +6,4 @@ $database = "task_manager";
 
 $conn = mysqli_connect($servername, $username, $password, $database);
 
-if (!$conn) {
-}
 ?>
