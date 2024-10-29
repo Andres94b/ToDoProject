@@ -8,8 +8,9 @@ if (isset($_GET['edit'])) {
     edit_task($task_id);     // Fetch the task data based on the task ID
 }
 
-if (isset($_GET['add'])) {
-    insert_task();     // Fetch the task data based on the task ID
+if (isset($_POST['add'])) {
+    insert_task();
+    echo "inserted.";// Fetch the task data based on the task ID
 }
 
 // switch ($operation) {
@@ -39,9 +40,12 @@ function insert_task() {
     $task_description = $_POST["taskDescription"];
     $task_status = $_POST["taskStatus"];
     
-    $query = "INSERT INTO tasks (task_name, task_description) VALUES ('$task_name', '$task_description')";
-    mysqli_query($connection, $query);
+    $query = "INSERT INTO tasks (task_name, task_description, status) VALUES ('$task_name', '$task_description', '$task_status')";
     
+    try {
+        mysqli_query($connection, $query);
+    } catch (Exception $e) {echo "Error<br/>";
+    }
     //header('Location: index.php');
 }
 
