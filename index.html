@@ -33,7 +33,18 @@
         <div class="task-section">
             <!--products-section-->
             <h1>task</h1>
+            
+            <ul class="task-buttons">
+            	<li><input type="button" id="add-task" value="Add Task" /></li>
+            	<li><a href="index.php" target="_self">List Tasks</a><br/> <!-- post --></li>
+            	<li><input type="button" id="list-tasks" value = "List Tasks"></li>
+            </ul>
+            
             <div class="task-grid">
+            <?php
+            include '../list_task.php';
+            ?>
+            
                 <div class="task" data-id="1" data-name="task 1" data-importance="urgent">
                     <h2>task 1</h2>
                     <p>Notes....</p>
@@ -50,11 +61,10 @@
                     <h2>task 4</h2>
                     <p>More notes...</p>
                 </div>
+                
                 <!-- Add more task as needed -->
             </div>
         </div>
-
-
 
         <!-- History Sidebar Section -->
         <div class="history-section">
@@ -69,5 +79,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts.js"></script>
+    <script src="online_storage.js"></script>
+    
 </body>
 </html>
