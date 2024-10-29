@@ -6,7 +6,7 @@ $query = "SELECT * FROM tasks WHERE status='pending'";
 $result = mysqli_query($connection, $query);
 
 while($row = mysqli_fetch_assoc($result)) {
-    echo "<div class='task'>
+    echo "<div class='history-item'>
             <span>{$row['task_name']}</span><br/>
             <span>{$row['task_description']}</span><br/>
             <span>{$row['id']}</span>
