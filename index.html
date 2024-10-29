@@ -35,14 +35,15 @@
             <h1>task</h1>
             
             <ul class="task-buttons">
-            	<li><a href="../operationData.php?op=add_task">Add Task</a><br/> <!-- post --></li>
             	<li><input type="button" id="add-task" value="Add Task" /></li>
-            	<li><a href="../list_task.php" target="_blank">List Tasks</a><br/> <!-- post --></li>
-            	<li><input type="button" id="list-tasks" value = "List Tasts"></li>
+            	<li><a href="index.php" target="_self">List Tasks</a><br/> <!-- post --></li>
+            	<li><input type="button" id="list-tasks" value = "List Tasks"></li>
             </ul>
             
             <div class="task-grid">
-            
+            <?php
+            include '../list_task.php';
+            ?>
             
                 <div class="task" data-id="1" data-name="task 1" data-importance="urgent">
                     <h2>task 1</h2>
@@ -82,4 +83,3 @@
     
 </body>
 </html>
-
