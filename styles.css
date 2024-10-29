@@ -55,6 +55,13 @@ body {
                 .navbar .nav-links li a:hover {
                     text-decoration: underline;
                 }
+.task-buttons{
+	list-style-type: none;
+	display: flex;
+}
+.task-buttons li{
+	margin-left: 20px;
+}
 
 .container {
     display: flex;
