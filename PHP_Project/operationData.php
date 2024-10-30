@@ -12,5 +12,7 @@ if (isset($_POST['add'])) {
 } else {
     echo "Invalid operation.";
 }
+header('location:index.php');
 ?>
+
 

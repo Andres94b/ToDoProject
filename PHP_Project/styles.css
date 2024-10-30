@@ -58,9 +58,12 @@ body {
 .task-buttons{
 	list-style-type: none;
 	display: flex;
+	justify-content: end;
 }
-.task-buttons li{
-	margin-left: 20px;
+.task-buttons #button-add{
+	padding : 5px 5px 5px 5px;
+	margin-right: 20px;
+	right: 5px;
 }
 
 .container {
@@ -137,7 +140,7 @@ body {
     gap: 10px;
 }
 
-#checkout-button {
+#button-add {
     background-color: #007bff;
     color: white;
     padding: 10px;
@@ -146,6 +149,6 @@ body {
     border-radius: 5px;
 }
 
-    #checkout-button:hover {
+    #button-add:hover {
         background-color: #0056b3;
     }
