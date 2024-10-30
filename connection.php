@@ -4,7 +4,7 @@ require_once 'dbconfig.php';
 if(!mysqli_connect_errno())
 {
     //die("Database connection failed: " . mysqli_connect_error());
-    header("Location:Front_end/index.php");
+    header("Location:index.php");
 }
 else{
     //header('Succesfully connected');
