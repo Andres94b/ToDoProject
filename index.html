@@ -1,3 +1,8 @@
+<?php
+include 'dbconfig.php';
+global $conn;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,10 +10,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Website</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 
+    <!-- Navigation Bar -->
     <div class="navbar">
         <div class="logo">
             <img src="logo.png" alt="Logo">
@@ -23,67 +28,71 @@
 
     <div class="container">
 
-
-        <!-- Task Grid Section -->
-        <!-- Add buttons to add new task on the top righ corner -->
-        <!-- Add taks should have colours for importance of tasks-->
-        <!-- Add edit or delete buttons on each task -->
-
-
+        <!-- Task Section -->
         <div class="task-section">
-            <!--products-section-->
-            <h1>task</h1>
-            
+            <h1>Task</h1>
+
+            <!-- Buttons for Adding and Listing Tasks -->
             <ul class="task-buttons">
-            	<li><input type="button" id="add-task" value="Add Task" /></li>
-            	<li><a href="index.php" target="_self">List Tasks</a><br/> <!-- post --></li>
-            	<li><input type="button" id="list-tasks" value = "List Tasks"></li>
+                <li><button onclick="document.getElementById('addTaskForm').style.display='block'">Add Task</button></li>
+                <li><a href="index.php">List Tasks</a></li>
             </ul>
-            
+
+            <!-- Add Task Form (Initially Hidden) -->
+            <div id="addTaskForm" style="display: none;">
+                <form action="add_task.php" method="post">
+                    <input type="hidden" name="add" value="1">
+                    <input type="text" name="taskName" placeholder="Task Name" required>
+                    <input type="text" name="taskDescription" placeholder="Description">
+                    <select name="taskStatus">
+                        <option value="pending">Pending</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                    <button type="submit">Add Task</button>
+                </form>
+            </div>
+
+            <!-- Display Tasks -->
             <div class="task-grid">
-            
-                <div class="task" data-id="1" data-name="task 1" data-importance="urgent">
-                    <h2>task 1</h2>
-                    <p>Notes....</p>
-                </div>
-                <div class="task" data-id="2" data-name="task 2" data-importance="important">
-                    <h2>task 2</h2>
-                    <p>Notes....</p>
-                </div>
-                <div class="task" data-id="3" data-name="task 3" data-importance="normal">
-                    <h2>task 3</h2>
-                    <p>More notes...</p>
-                </div>
-                <div class="task" data-id="4" data-name="task 4" data-importance="not-important">
-                    <h2>task 4</h2>
-                    <p>More notes...</p>
-                </div>
-                
-                <!-- Add more task as needed -->
+                <?php
+                // Fetch pending tasks from the database
+                $query = "SELECT * FROM tasks WHERE status='pending'";
+                $result = mysqli_query($conn, $query);
+
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<div class='task' data-id='{$row['id']}'>
+                            <h2>{$row['task_name']}</h2>
+                            <p>{$row['task_description']}</p>
+                            <div class='task-actions'>
+                                <a href='edit_task.php?id={$row['id']}'>Edit</a> |
+                                <a href='delete_task.php?id={$row['id']}'>Delete</a> |
+                                <a href='completed_tasks.php?id={$row['id']}'>Complete</a>
+                            </div>
+                          </div>";
+                }
+                ?>
             </div>
         </div>
 
-        <!-- History Sidebar Section -->
+        <!-- Completed Tasks Sidebar -->
         <div class="history-section">
             <h2>Your History</h2>
             <div class="history-grid">
-            <?php
-            include '../list_task.php';
-            ?>
+                <?php
+                // Fetch completed tasks from the database
+                $query_completed = "SELECT * FROM tasks WHERE status='completed'";
+                $result_completed = mysqli_query($conn, $query_completed);
+
+                while ($row_completed = mysqli_fetch_assoc($result_completed)) {
+                    echo "<div class='history-item'>
+                            <span>{$row_completed['task_name']} - Completed at: {$row_completed['completed_at']}</span>
+                          </div>";
+                }
+                ?>
             </div>
-            <div class="history-summary">
-                <p>Total: $<span id="total-price">0</span></p>
-                <button id="checkout-button">Checkout</button>
-            </div>
-            <?php
-            include '../completed_tasks.php';
-            ?>
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts.js"></script>
-    <script src="online_storage.js"></script>
-    
 </body>
 </html>
