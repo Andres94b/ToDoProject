@@ -1,20 +1,20 @@
 <?php
 include 'dbconfig.php';
-global $connection;
+global $conn;
 
 $query = "SELECT * FROM tasks WHERE status='pending'";
-$result = mysqli_query($connection, $query);
+$result = mysqli_query($conn, $query);
 
-while($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($result)) {
     echo "<div class='history-item'>
             <span>{$row['task_name']}</span><br/>
             <span>{$row['task_description']}</span><br/>
-            <span>{$row['id']}</span>
-
-            <div>
-                <a href='../edit_task.php?id={$row['id']}'>Edit</a>
-                <a href='complete_task.php?id={$row['id']}'>Complete</a>
-                <a href='delete_task.php?id={$row['id']}'>Delete</a>
+            <span>Task ID: {$row['id']}</span>
+            
+            <div class='task-actions'>
+                <a href='operationData.php?edit={$row['id']}'>Edit</a> |
+                <a href='operationData.php?complete={$row['id']}'>Complete</a> |
+                <a href='operationData.php?delete={$row['id']}'>Delete</a>
             </div>
           </div>";
 }
