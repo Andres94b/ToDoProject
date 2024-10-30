@@ -1,44 +1,47 @@
 <?php
 include 'dbconfig.php';
+global $conn;
 
-if (isset($_GET['id'])) {     
-    $task_id = $_GET['id'];     // Fetch the task data based on the task ID
+if (isset($_GET['id'])) {
+    // Fetch the task details for editing
+    $task_id = (int) $_GET['id'];
+    $query = "SELECT * FROM tasks WHERE id = $task_id";
+    $result = mysqli_query($conn, $query);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        $task = mysqli_fetch_assoc($result);
+    } else {
+        echo "Task not found.";
+        exit();
+    }
 }
-$query = "SELECT * FROM tasks WHERE id = $task_id";     
-$result = mysqli_query($connection, $query);     
-if ($result && mysqli_num_rows($result) > 0) {         
-    $task = mysqli_fetch_assoc($result);
+
+if (isset($_POST["task_name"]) && isset($_GET['id'])) {
+    // Update the task in the database
+    $task_id = (int) $_GET['id'];
+    $task_name = mysqli_real_escape_string($conn, $_POST["task_name"]);
+    $task_description = mysqli_real_escape_string($conn, $_POST["task_description"] ?? '');
+    $task_status = mysqli_real_escape_string($conn, $_POST["status"] ?? 'pending');
+    
+    $query = "UPDATE tasks SET task_name = '$task_name', task_description = '$task_description', status = '$task_status' WHERE id = $task_id";
+    
+    if (mysqli_query($conn, $query)) {
+        echo "Task updated successfully.";
+        header("Location: index.php");
+        exit();
+    } else {
+        echo "Error updating task: " . mysqli_error($conn);
+    }
 }
 ?>
 
-<form action="../operationData.php" method="POST">
-<label name="id"></label><br>
-
-<label for="taskName">Task Name:</label><br>
-<input type="text" id="taskName" name="taskName" value="<?php echo htmlspecialchars($task_name); ?>"><br><br>
-
-<label for="taskDescription">Task Description:</label><br>
-<input type="text" id="taskDescription" name="taskDescription" value="<?php echo htmlspecialchars($task_description); ?>"><br><br>
-
-<label for="selTaskStatus">Task Status:</label><br>
-<select id="selTaskStatus" name="taskStatus">
-<option value="">Select an Option</option>
-<option value="0">Pending</option>
-<option value="1">Done</option>
-</select>
-<input type="submit" name="edit" value="edit">
+<!-- Edit Task Form -->
+<form action="edit_task.php?id=<?php echo $task_id; ?>" method="post">
+    <input type="text" name="task_name" placeholder="Task Name" value="<?php echo htmlspecialchars($task['task_name']); ?>" required>
+    <input type="text" name="task_description" placeholder="Task Description" value="<?php echo htmlspecialchars($task['task_description']); ?>">
+    <select name="status">
+        <option value="pending" <?php if ($task['status'] === 'pending') echo 'selected'; ?>>Pending</option>
+        <option value="completed" <?php if ($task['status'] === 'completed') echo 'selected'; ?>>Completed</option>
+    </select>
+    <button type="submit">Save Changes</button>
 </form>
-
-<?php
-// $task_id = $_GET['id'];
-
-edit_task($task_id);
-
-function edit_task($task_id) {
-    global $connection;
-    $task_name = $_POST["task_name"];
-    $task_description = $_POST["task_description"];
-    $task_status = $_POST["status"];
-    $query = "UPDATE tasks SET task_name = '$task_name', task_description = '$task_description', status = '$task_status' WHERE id = $task_id";
-    mysqli_query($connection, $query);
-}
