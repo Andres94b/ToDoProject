@@ -1,5 +1,5 @@
 <?php
-require_once 'dbconfig.php';
+require_once 'olddbconfig.php';
 //global $connection;
 if(!mysqli_connect_errno())
 {

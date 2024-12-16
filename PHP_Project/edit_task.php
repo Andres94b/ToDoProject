@@ -1,5 +1,5 @@
 <?php
-include 'dbconfig.php';
+include 'olddbconfig.php';
 global $conn;
 
 if (isset($_GET['id'])) {
