@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/x-icon" href="data:" />
+    <title>New Task</title>
+    <style>
+        body {
+            font-family: Tahoma;
+        }
+
+        .right {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <h1>New Task</h1>
+    
+    <form action="../operationData.php" method="POST">
+  		<label for="taskName">Task Name:</label><br>
+  		<input type="text" id="taskName" name="taskName"><br><br>
+  		
+  		<label for="taskDescription">Task Description:</label><br>
+  		<input type="text" id="taskDescription" name="taskDescription"><br><br>
+  		
+  		<label for="selTaskStatus">Task Status:</label><br>
+  		<select id="selTaskStatus" name="taskStatus">
+       		<option value="">Select an Option</option>
+     		<option value="pending">Pending</option>
+      		<option value="completed">Completed</option>
+        </select>	
+  		<input type="submit" value="Submit" name="add">
+	</form>
+    <br />
+    <!-- Including jQuery (check https://releases.jquery.com/ to get the latest version) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+		window.close();
+        $(document).ready(function () {
+            $("#btnCreateTask").on("click", btnCreateTask_onclick);
+        });
+
+        function btnCreateTask_onclick() {
+            let task = new Object();
+            task.taskName = $("#txtTaskName").val();
+            task.taskDescription = $("#txtTaskDescription").val();
+            task.taskStatus = $("#selTaskStatus").val();
+
+            if (task.taskName == "" || task.taskStatus == "") {
+                alert("All fields are required");
+                return;
+            }
+
+            window.opener.receiveTaskData(task, true);
+            window.close();
+        }
+    </script>
+    
+    <script src="scripts.js"></script>
+</body>
+</html>
