@@ -12,8 +12,11 @@ try{
     
     if($tasks!=""){
         foreach ($tasks as $row ){
-            echo "<div class='history-item active' data-date='{$row->getCompleted()}'>
-                    <span>{$row->getName()} - Completed at: {$row->getCompleted()}</span>
+            echo "<div class='history-item'>
+                  <span>{$row->getName()} - Completed at: {$row->getCompleted()}</span>
+                  <div style='margin-top: 10px;'>
+                  <a href='../timer/show_records.php?task_id={$row->getId()}' class='button'>View All time Records</a>
+                  </div>
                   </div>";
         }
     }
