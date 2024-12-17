@@ -1,7 +1,14 @@
 <?php
 // Get the current or past month and year as parameters.
-$month = isset($_GET['month']) ? $_GET['month'] : date('m');
-$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+$month = isset($_GET['month']) ? intval($_GET['month']) : date('m');
+$year = isset($_GET['year']) ? intval($_GET['year']) : date('Y');
+
+// Validate month
+if ($month < 1) {
+    $month = 1; // Set to January
+} elseif ($month > 12) {
+    $month = 12; // Set to December
+}
 
 // Calculate the first day of the month and the total number of days.
 $firstDayOfMonth = mktime(0, 0, 0, $month, 1, $year);
@@ -62,7 +69,6 @@ for ($day = 1; $day <= $daysInMonth; $day++) {
     }
 }
 
-
 // Fill the end of the week if the month ends before Saturday.
 if (($dayOfWeek + $daysInMonth) % 7 != 0) {
     echo str_repeat("<td></td>", 7 - (($dayOfWeek + $daysInMonth) % 7));
@@ -71,17 +77,27 @@ if (($dayOfWeek + $daysInMonth) % 7 != 0) {
 echo "</tr></table>";
 echo "</div>"; // Closes the calendar container
 
-
 // Variables for the next and previous month.
 $prevMonth = $month - 1;
 $nextMonth = $month + 1;
-$prevYear = $nextMonth == 1 ? $year - 1 : $year;
-$nextYear = $nextMonth == 13 ? $year + 1 : $year;
+
+if ($prevMonth < 1) {
+    $prevMonth = 12;
+    $prevYear = $year - 1;
+} else {
+    $prevYear = $year;
+}
+
+if ($nextMonth > 12) {
+    $nextMonth = 1;
+    $nextYear = $year + 1;
+} else {
+    $nextYear = $year;
+}
 
 echo "<br/>";
 echo "<div class='calendar-nav'>";
 echo "<a href='?month=$prevMonth&year=$prevYear'>Previous Month</a> | ";
 echo "<a href='?month=$nextMonth&year=$nextYear'>Next Month</a>";
 echo "</div>";
-
 ?>
