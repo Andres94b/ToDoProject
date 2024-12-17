@@ -123,6 +123,10 @@ body {
     text-align: center;
     cursor: pointer;
     transition: transform 0.2s ease;
+    display: none; 
+}
+.history-item.active {
+    display: block;
 }
 
     .history-item:hover {

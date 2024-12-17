@@ -70,6 +70,13 @@ global $conn;
             <hr>
             <br/>
             <h2>Your History</h2>
+            <!-- Dropdown for filtering -->
+            <select class="filter-dropdown" id="filterDropdown">
+                <option value="all">Show All</option>
+                <option value="today">Today</option>
+                <option value="last-week">Last Week</option>
+                <option value="last-month">Last Month</option>
+            </select>
             <div class="history-grid">
                 <?php
                     include 'completed_tasks.php';

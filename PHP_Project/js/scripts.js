@@ -39,17 +39,58 @@ $(document).ready(function () {
 
         updateHistory();
     });
-
-    // Checkout button
-    $('#checkout-button').click(function () {
-        alert('Proceeding to checkout. Total: $' + totalPrice.toFixed(2));
-        history = [];  // Clear the cart
-        updateHistory();  // Update UI
-    });
+	$('#filterDropdown').on('change', function () {
+	        filterItems(); // Call the filterItems function when the value changes
+	    });
+	
 });
 
 // Support Functions
+function filterItems() {
+    const selectedCategory = $('#filterDropdown').val();
+    const today = new Date();
 
+    $('.history-item').each(function () {
+        const itemDate = new Date($(this).data('date')); // Get the item's date
+        let showItem = false;
+
+        switch (selectedCategory) {
+            case 'all':
+                showItem = true;
+                break;
+            case 'today':
+                // Check if the item's date is today
+                showItem = isSameDay(today, itemDate);
+                break;
+            case 'last-week':
+                // Check if the item's date is within the last 7 days
+                const lastWeek = new Date(today);
+                lastWeek.setDate(today.getDate() - 7);
+                showItem = itemDate >= lastWeek && itemDate < today;
+                break;
+            case 'last-month':
+                // Check if the item's date is within the last 30 days
+                const lastMonth = new Date(today);
+                lastMonth.setDate(today.getDate() - 30);
+                showItem = itemDate >= lastMonth && itemDate < today;
+                break;
+        }
+
+        if (showItem) {
+            $(this).addClass('active');
+        } else {
+            $(this).removeClass('active');
+        }
+    });
+}
+// Helper function to check if two dates are the same day
+function isSameDay(date1, date2) {
+    return (
+        date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate()
+    );
+}
 // Update Cart
 function updateHistory() {
     const historyItemsContainer = $('.history-grid');
