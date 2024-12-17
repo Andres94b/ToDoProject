@@ -214,6 +214,18 @@ class Task{
         
         return serialize($listOfTasks);
     }
-    
+        public function fetchTotalTimeByTaskId($connection, $taskId) {
+
+        $taskId = intval($taskId);
+        
+        $sqlStmt = "SELECT SUM(total_time) as total_time FROM task_time WHERE task_id = :task_id";
+        $prepare = $connection->prepare($sqlStmt);
+        $prepare->bindValue(":task_id", $taskId, PDO::PARAM_INT);
+        $prepare->execute();
+        
+        $result = $prepare->fetch(PDO::FETCH_ASSOC);
+        
+        return $result['total_time'] ?? 0;
+    }
     
 }
