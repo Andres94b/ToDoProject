@@ -33,14 +33,10 @@ $(document).ready(function () {
         updateHistory();
     });
 
-    // Remove item from cart when clicked
+    // Actions for tasks in history
     $(document).on('click', '.history-item', function () {
-        const taskId = $(this).data('id');
+        //const taskId = $(this).data('id');
 
-        // Remove product from cart
-        history = history.filter(item => item.id !== taskId);
-
-        // Update cart UI
         updateHistory();
     });
 
@@ -57,7 +53,7 @@ $(document).ready(function () {
 // Update Cart
 function updateHistory() {
     const historyItemsContainer = $('.history-grid');
-    historyItemsContainer.empty();
+    //historyItemsContainer.empty();
 
     totalPrice = 0;
     history.forEach(item => {
