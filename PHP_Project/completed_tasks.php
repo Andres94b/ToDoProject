@@ -1,21 +1,33 @@
 <?php
-include 'olddbconfig.php';
-global $conn;
+include_once '../dbconfig.php';
+include_once '../Task.class.php';
 
-if (isset($_GET['id'])) {
-    $task_id = (int) $_GET['id'];
+$username = $_SESSION["USERNAME"];
+
+try{
+    $connection = new PDO("mysql:host=$host;dbname=$dbname;",$user,$pass);
+    $aTask = new Task();
+    $aTask->setUsername($username);
+    $tasks=unserialize($aTask->fetchCompletedTasksById($connection));
     
-    // Update task to set status as completed and record the completion timestamp
-    $query = "UPDATE tasks SET status = 'completed', completed_at = NOW() WHERE id = $task_id";
-    
-    if (mysqli_query($conn, $query)) {
-        // Redirect back to index.php after completing the task
-        header("Location: index.php");
-        exit();
-    } else {
-        echo "Error marking task as completed: " . mysqli_error($conn);
+    if($tasks!=""){
+        foreach ($tasks as $row ){
+            echo "<div class='history-item'>
+                  <span>{$row->getName()} - Completed at: {$row->getCompleted()}</span>
+                  <div style='margin-top: 10px;'>
+                  <a href='../timer/show_records.php?task_id={$row->getId()}' class='button'>View All time Records</a>
+                  </div>
+                  </div>";
+        }
     }
-} else {
-    echo "No task ID specified.";
+    else{
+        echo $tasks;
+        echo "No completed tasks";
+    }
 }
+catch(PDOException $e){
+    echo $e->getMessage();
+}
+
+
 ?>
