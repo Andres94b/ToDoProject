@@ -13,7 +13,7 @@ try{
     
     if($tasks!=""){
         foreach ($tasks as $row ){
-            echo "<div class='history-item' data-id='{$row->getId()}'>
+            echo "<div class='history-item active' data-date='{$row->getDuedate()}'>
                             <h2>{$row->getName()}</h2>
                             <p>{$row->getDescription()}</p>
                             <div class='task-actions'>
