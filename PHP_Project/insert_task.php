@@ -1,32 +1,34 @@
 <?php
 include 'olddbconfig.php';
 
-
-// $operation = $_GET["op"];
-
+// Check if the "add" operation is requested
 if (isset($_POST['add'])) {
     insert_task();
-    echo "inserted.";// Fetch the task data based on the task ID
+    echo "Task inserted successfully.";
 }
-
 
 function insert_task() {
-    //$task_name = $_POST['task_name'];
-    //$task_description = $_POST['task_description'];
-    global $connection;
+    global $connection; // Ensure the database connection is used
     
+    // Retrieve form data
     $task_name = $_POST["taskName"];
-    $task_description = $_POST["taskDescription"];
+    $task_description = $_POST["taskDescription"] ?? '';
     $task_status = $_POST["taskStatus"];
+    $due_date = $_POST["dueDate"];
     
-    $query = "INSERT INTO tasks (task_name, task_description, status) VALUES ('$task_name', '$task_description', '$task_status')";
+    // Insert query with due_date
+    $query = "INSERT INTO tasks (task_name, task_description, status, due_date)
+              VALUES ('$task_name', '$task_description', '$task_status', '$due_date')";
     
     try {
-        mysqli_query($connection, $query);
-    } catch (Exception $e) {echo "Error<br/>";
+        // Execute the query
+        if (mysqli_query($connection, $query)) {
+            echo "Task added successfully.";
+        } else {
+            echo "Error inserting task: " . mysqli_error($connection);
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
     }
-    //header('Location: index.php');
 }
-
-
 ?>

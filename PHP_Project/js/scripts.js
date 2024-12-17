@@ -97,3 +97,118 @@ if ('serviceWorker' in navigator) {
             console.error('Service Worker registration failed:', error);
         });
 }
+
+
+
+let reminders = [];
+
+/**
+ * Add a reminder for a task.
+ * @param {string} taskName - Name of the task.
+ * @param {Date} dueDate - The due date and time of the task.
+ */
+function setReminder(taskName, dueDate) {
+    reminders.push({ taskName, dueDate });
+}
+
+/**
+ * Check reminders on page load.
+ * This function scans for tasks in the reminder window (15 minutes before dueDate to dueDate).
+ */
+function checkReminders() {
+    const now = new Date();
+
+    reminders.forEach((reminder) => {
+        const { taskName, dueDate } = reminder;
+
+        // Calculate the reminder window
+        const startReminderTime = new Date(dueDate.getTime() - 15 * 60000); // 15 minutes before dueDate
+        const endReminderTime = dueDate;
+
+        console.log(`Task: "${taskName}", Start Reminder: ${startReminderTime}, Due Date: ${endReminderTime}, Current Time: ${now}`);
+
+        // Check if the current time is within the reminder window
+        if (now >= startReminderTime && now < endReminderTime) {
+            console.log(`Showing reminder for task: "${taskName}"`);
+            createPopup(taskName);
+
+            // Remove the task from the reminders list after showing the popup
+            reminders = reminders.filter((r) => r.taskName !== taskName);
+        } else if (now >= endReminderTime) {
+            // Task is overdue
+            console.log(`Task "${taskName}" is already overdue.`);
+            reminders = reminders.filter((r) => r.taskName !== taskName);
+        }
+    });
+}
+
+/**
+ * Create and display a popup reminder.
+ * @param {string} taskName - Name of the task.
+ */
+function createPopup(taskName) {
+    // Create the popup element
+    const popup = document.createElement('div');
+    popup.className = 'reminder-popup';
+    popup.innerHTML = `
+        <p>Reminder: Your task "${taskName}" is due soon!</p>
+        <button onclick="this.parentElement.remove()">Close</button>
+    `;
+
+    // Append the popup to the body
+    document.body.appendChild(popup);
+
+    // Make the popup draggable
+    makeDraggable(popup);
+}
+
+/**
+ * Make a DOM element draggable.
+ * @param {HTMLElement} element - The element to make draggable.
+ */
+function makeDraggable(element) {
+    let mouseX = 0, mouseY = 0;
+    let currentX = 0, currentY = 0;
+
+    let isDragging = false;
+
+    element.onmousedown = (e) => {
+        e.preventDefault();
+
+        isDragging = true;
+
+        // Store the mouse cursor's initial position
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        document.onmousemove = (e) => {
+            if (!isDragging) return;
+
+            // Calculate the new position
+            const deltaX = e.clientX - mouseX;
+            const deltaY = e.clientY - mouseY;
+
+            currentX += deltaX;
+            currentY += deltaY;
+
+            // Apply the new position using transform
+            element.style.transform = `translate(${currentX}px, ${currentY}px)`;
+
+            // Update mouse position
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        };
+
+        document.onmouseup = () => {
+            isDragging = false;
+            document.onmousemove = null;
+            document.onmouseup = null;
+        };
+    };
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("Page loaded. Checking reminders...");
+    checkReminders();
+});
