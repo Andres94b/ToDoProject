@@ -3,28 +3,12 @@ class Task{
     private $id;
     private $name;
     private $description;
-    private $duedate;
     private $status;
     private $created;
     private $completed;
     private $username;
+    private $totaTime;
     
-    /**
-     * @return mixed
-     */
-    public function getDuedate()
-    {
-        return $this->duedate;
-    }
-
-    /**
-     * @param mixed $duedate
-     */
-    public function setDuedate($duedate)
-    {
-        $this->duedate = $duedate;
-    }
-
     /**
      * @return string
      */
@@ -137,11 +121,10 @@ class Task{
         $this->username = $username;
     }
 
-    public function __construct($id=null, $name=null,$description=null, $duedate=null, $status=null, $created=null, $completed=null, $username=null){
+    public function __construct($id=null, $name=null,$description=null, $status=null, $created=null, $completed=null, $username=null){
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
-        $this->duedate = $duedate;
         $this->status = $status;
         $this->created = $created;
         $this->completed = $completed;
@@ -167,7 +150,6 @@ class Task{
                 $task->id=$rec["id"];
                 $task->name = $rec["task_name"];
                 $task->description = $rec["task_description"];
-                $task->duedate = $rec["due_date"];
                 $task->status= $rec["status"];
                 $task->created = $rec["created_at"];
                 $task->completed = $rec["completed_at"];
@@ -200,7 +182,6 @@ class Task{
                 $task->id=$rec["id"];
                 $task->name = $rec["task_name"];
                 $task->description = $rec["task_description"];
-                $task->duedate = $rec["due_date"];
                 $task->status= $rec["status"];
                 $task->created = $rec["created_at"];
                 $task->completed = $rec["completed_at"];
@@ -214,6 +195,21 @@ class Task{
         
         return serialize($listOfTasks);
     }
+    
+    public function fetchTotalTimeByTaskId($connection, $taskId) {
+
+        $taskId = intval($taskId);
+        
+        $sqlStmt = "SELECT SUM(total_time) as total_time FROM task_time WHERE task_id = :task_id";
+        $prepare = $connection->prepare($sqlStmt);
+        $prepare->bindValue(":task_id", $taskId, PDO::PARAM_INT);
+        $prepare->execute();
+        
+        $result = $prepare->fetch(PDO::FETCH_ASSOC);
+        
+        return $result['total_time'] ?? 0;
+    }
+    
     
     
 }
