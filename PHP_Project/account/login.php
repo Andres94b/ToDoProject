@@ -4,122 +4,210 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Website</title>
-    <link rel = "stylesheet" href="../styles/styles.css">
-    <link rel = "stylesheet" href="../styles/calendar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 16px;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
+    /* Global Box-Sizing Reset */
+    * {
+        box-sizing: border-box; /* Ensures padding and borders are part of the width */
+        margin: 0;
+        padding: 0;
+    }
 
-        /* Centered Login & Signup Forms */
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 90vh;
-            gap: 50px;
+    /* General Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: url('../assets/background.jpg') no-repeat center center fixed; /* Background Image */
+        background-size: cover;       
+        color: #333;
+        height: 100vh;
+    }
+
+    /* Header */
+    header {
+        position: sticky;
+        top: 0;
+        background-color: #333;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        border-bottom: 1px solid #444;
+    }
+
+    header h1 {
+        margin: 0 auto;
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+
+    nav {
+        display: flex;
+        gap: 15px;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 5px 10px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+        background-color: #007BFF;
+        color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Centered Login Form */
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+    }
+
+    .form-box {
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        width: 350px;
+        border-radius: 10px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .form-box img {
+        width: 80px;
+        margin-bottom: 20px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .form-box img:hover {
+        transform: scale(1.1);
+    }
+
+    .form-box h2 {
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    /* Input Fields and Button */
+    .form-box input,
+    .form-box button {
+        width: 100%; /* Ensures full width */
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        display: block; /* Prevents inline spacing issues */
+    }
+
+    .form-box input:focus {
+        outline: none;
+        border-color: #007BFF;
+        box-shadow: 0 0 5px #007BFF;
+    }
+
+    .form-box button {
+        background-color: #007BFF;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+
+    .form-box button:hover {
+        background-color: #0056b3;
+    }
+
+    .form-box p {
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+    .form-box a {
+        color: #007BFF;
+        text-decoration: none;
+    }
+
+    .form-box a:hover {
+        text-decoration: underline;
+    }
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        background-color: #222;
+        color: #ddd;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+
+    /* Fade-in Animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            text-align: center;
         }
 
         .form-box {
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 300px;
-            border-radius: 5px;
-            text-align: center;
+            width: 90%;
         }
-
-        .form-box h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .form-box input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-        }
-
-        .form-box button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .form-box button:hover {
-            background-color: #0056b3;
-        }
-
-        .form-box p {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .form-box a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        .form-box a:hover {
-            text-decoration: underline;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
-		<?php include_once '../home/heading.php';?>
-	<!-- Forms -->
+    <!-- Header -->
+    <header>
+        <h1>NOT-IT : A TO-DO List WebApp</h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#login">Login</a>
+        </nav>
+    </header>
+
+    <!-- Forms -->
     <div class="container">
         <!-- Login Form -->
         <div class="form-box">
+            <!-- Logo -->
+            <img src="../assets/Logo.png" alt="Website Logo">
             <h2>Login</h2>
             <form action="search_user.php" method="post">
-                <input type="text" name ="username" placeholder="Username" required>
+                <input type="text" name="username" placeholder="Username" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button type="submit">Log In</button>
             </form>
             <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
         </div>
-
     </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 To-Do Website. All rights reserved.
+    </footer>
 </body>
 </html>
