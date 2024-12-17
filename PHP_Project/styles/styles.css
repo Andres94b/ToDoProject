@@ -42,19 +42,15 @@ body {
         display: flex;
     }
 
-        .navbar .nav-links li {
+        .navbar .nav-links a {
+            color: white;
             margin-left: 20px;
+            text-decoration: none;
+            
         }
-
-            .navbar .nav-links li a {
-                color: white;
-                text-decoration: none;
-                font-size: 18px;
-            }
-
-                .navbar .nav-links li a:hover {
-                    text-decoration: underline;
-                }
+        .navbar .nav-links a:hover {
+        	text-decoration: underline;
+        }
 .task-buttons{
 	list-style-type: none;
 	display: flex;
