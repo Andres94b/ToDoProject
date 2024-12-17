@@ -39,15 +39,16 @@ $(document).ready(function () {
 
         updateHistory();
     });
-	$('#filterDropdown').on('change', function () {
-	        filterItems(); // Call the filterItems function when the value changes
-	    });
+	$('#historyFilterDropdown').on('change', function () {
+		historyFilterItems(); // Call the filterItems function when the value changes
+		}
+	);		
 	
 });
 
 // Support Functions
-function filterItems() {
-    const selectedCategory = $('#filterDropdown').val();
+function historyFilterItems() {
+    const selectedCategory = $('#historyFilterDropdown').val();
     const today = new Date();
 
     $('.history-item').each(function () {

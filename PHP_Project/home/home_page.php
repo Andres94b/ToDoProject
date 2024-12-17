@@ -11,6 +11,8 @@ global $conn;
     <title>To-Do Website</title>
     <link rel="stylesheet" href="../styles/styles.css">
     <link rel = "stylesheet" href="../styles/calendar.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
 </head>
 <body>
 	<?php include_once 'heading.php';?>
@@ -38,11 +40,6 @@ global $conn;
                     <input type="text" name="taskDescription" placeholder="Description">
                     <label for="dueDate">Due Date: </label>
             		<input type="datetime-local" id="dueDate" name="dueDate" required>
-            		<label for="taskStatus">Task Status: </label>
-                    <select name="taskStatus">
-                        <option value="pending">Pending</option>
-                        <option value="completed">Completed</option>
-                    </select>
                     <button id="submit_button" name="add" type="submit">Add Task</button>
                 </form>
             </div>
@@ -61,6 +58,7 @@ global $conn;
         <div class="history-section">
         <!-- Display Tasks -->
         	<h2>Your Tasks</h2>
+        	
             <div class="history-grid">
             
                 <?php
@@ -71,7 +69,7 @@ global $conn;
             <br/>
             <h2>Your History</h2>
             <!-- Dropdown for filtering -->
-            <select class="filter-dropdown" id="filterDropdown">
+            <select class="history-filter-dropdown" id="historyFilterDropdown">
                 <option value="all">Show All</option>
                 <option value="today">Today</option>
                 <option value="last-week">Last Week</option>

@@ -4,7 +4,7 @@ include 'olddbconfig.php';
 global $conn;
     $task_name =  $_POST["taskName"];
     $task_description = $_POST["taskDescription"] ?? '';
-    $task_status = $_POST["taskStatus"];
+    $task_status = 'pending';//$_POST["taskStatus"];
     $due_date = $_POST["dueDate"];
     $due_date = str_replace('T', ' ', $due_date);
     $username = $_SESSION["USERNAME"];

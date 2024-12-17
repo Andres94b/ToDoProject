@@ -10,8 +10,8 @@ echo '<nav class="nav-links">';
 if (isset($_SESSION["USERNAME"])){
     $name = $_SESSION["NAME"];
     //$sid = session_id();
+    echo "<a>$name</a>";
     echo '<a href="../home/home_page.php">Home</a>';
-    echo "<a href='../account/account_config.php'>$name</a>";
     echo '&nbsp&nbsp <a href="../account/logout.php">Log out</a>';
     
 }

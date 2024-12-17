@@ -17,14 +17,14 @@ echo "<script>console.log('Reminder DB connection successful');</script>";
 $sql = "SELECT task_name, due_date
         FROM tasks
         WHERE username = '$username' AND status = 'pending'";
-echo "Executing Query: <b>$sql</b><br>";
+//echo "Executing Query: <b>$sql</b><br>";
 $result = $reminder_conn->query($sql);
 
 // Debug: Query success or failure
 if (!$result) {
     die("Error in query: " . $reminder_conn->error);
 }
-echo "Number of rows: <b>" . $result->num_rows . "</b><br>";
+//echo "Number of rows: <b>" . $result->num_rows . "</b><br>";
 if ($result->num_rows > 0) {
     echo "<script>";
     while ($row = $result->fetch_assoc()) {
