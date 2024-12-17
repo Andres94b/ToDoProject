@@ -14,7 +14,6 @@ global $conn;
 </head>
 <body>
 	<?php include_once 'heading.php';?>
-	
     <br/>
 	
     <div class="container">
@@ -33,8 +32,13 @@ global $conn;
             <div id="addTaskForm" style="display: none;">
                 <form action="../operationData.php" method="post">
                     <input type="hidden" name="add" value="1">
+                    <label for="taskName">Task Name: </label>
                     <input type="text" name="taskName" placeholder="Task Name" required>
+                    <label for="taskDescription">Description: </label>
                     <input type="text" name="taskDescription" placeholder="Description">
+                    <label for="dueDate">Due Date: </label>
+            		<input type="datetime-local" id="dueDate" name="dueDate" required>
+            		<label for="taskStatus">Task Status: </label>
                     <select name="taskStatus">
                         <option value="pending">Pending</option>
                         <option value="completed">Completed</option>
@@ -75,5 +79,6 @@ global $conn;
     </div>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/scripts.js"></script>
+    <?php include 'reminder.php';?>
 </body>
 </html>
